@@ -1,4 +1,9 @@
-jsc-decoder
-===========
+JSC: Joint Souce Channel Model and Decoder
+===
 
-joint source channel decoder
+Install
+./waf configure [--prefix=INSTALL_DIRECTORY]
+./waf build
+sudo waf install
+
+Usage
