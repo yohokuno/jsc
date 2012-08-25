@@ -13,7 +13,7 @@
 
 namespace jsc {
 
-bool Builder::Build(const char *filename, const char *prefix) {
+bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
 
   // open text file
   fstream fs(filename);
@@ -40,6 +40,8 @@ bool Builder::Build(const char *filename, const char *prefix) {
     Ngram ngram;
     ngram.ngram = result.at(1);
     vector<string> splited;
+    bool flag = false;
+
     split(ngram.ngram, ' ', splited);
     for (uint32 i = 0; i < splited.size(); i++) {
       if (splited[i] == "<s>" || splited[i] == "</s>" || splited[i] == "unk") {
@@ -47,10 +49,16 @@ bool Builder::Build(const char *filename, const char *prefix) {
       } else {
         vector<string> pair;
         split(splited[i], '/', pair);
-        ASSERT(pair.size() == 2);
-        ngram.source += pair[1];
+        if (pair.size() == 2) {
+          if (!reverse)
+            ngram.source += pair[1];
+          else
+            ngram.source += pair[0];
+        } else
+          flag = true;
       }
     }
+    if (flag) continue;
 
     // parse cost
     double cost;

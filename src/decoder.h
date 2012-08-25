@@ -22,10 +22,10 @@ class Decoder {
   Decoder();
   virtual ~Decoder();
 
-  bool Decode(string &input, vector<Node> &nodes);
+  bool Decode(string &input, vector<Node> &nodes, bool label=true, bool reverse=false);
 
   // Internal functions for Decode() method.
-  bool SearchSubString(string &input, vector<vector<Ngram> > &result);
+  bool SearchSubString(string &input, vector<vector<Ngram> > &result, bool label);
 
   // Viterbi algorithm has 2 steps:
   //  1) Forward: calculate cost of nodes in lattice from left to righ

@@ -8,13 +8,13 @@ Lattice::Lattice() {
 Lattice::~Lattice() {
 }
 
-bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key) {
+bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key, bool reverse) {
   key_ = key;
   end_nodes_.resize(ngrams.size() + 2);
 
   for (uint32 i = 0; i < ngrams.size(); i++) {
     for (uint32 j = 0; j < ngrams[i].size(); j++) {
-      Node node(ngrams[i][j]);
+      Node node(ngrams[i][j], reverse);
       uint32 position = i + node.GetTotalLength();
       end_nodes_[position].push_back(node);
     }

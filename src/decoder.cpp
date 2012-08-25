@@ -9,16 +9,16 @@ Decoder::Decoder()
 Decoder::~Decoder() {
 }
 
-bool Decoder::Decode(string &input, vector<Node> &nodes) {
+bool Decoder::Decode(string &input, vector<Node> &nodes, bool label, bool reverse) {
   vector<vector<Ngram> > ngrams;
 
-  if (!SearchSubString(input, ngrams)) {
+  if (!SearchSubString(input, ngrams, label)) {
     return false;
   }
 
   Lattice lattice;
 
-  if (!lattice.CreateLattice(ngrams, input)) {
+  if (!lattice.CreateLattice(ngrams, input, reverse)) {
     return false;
   }
 
@@ -29,9 +29,12 @@ bool Decoder::Decode(string &input, vector<Node> &nodes) {
   return true;
 }
 
-bool Decoder::SearchSubString(string &input, vector<vector<Ngram> > &result) {
-  input.insert(0,"");
-  input.append("");
+bool Decoder::SearchSubString(string &input, vector<vector<Ngram> > &result, bool label) {
+  if (label) {
+    input.insert(0,"");
+    input.append("");
+  }
+
   result.resize(input.size());
 
   for (uint32 i = 0; i < input.size(); i++) {

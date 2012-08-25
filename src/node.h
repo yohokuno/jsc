@@ -24,7 +24,7 @@ struct Node {
     back_index = 0;
   }
 
-  Node(Ngram &ngram) {
+  Node(Ngram &ngram, bool reverse=false) {
     vector<string> splited;
     split(ngram.ngram, ' ', splited);
     for (uint32 i = 0; i < splited.size(); i++) {
@@ -35,8 +35,13 @@ struct Node {
         vector<string> pair;
         split(splited[i], '/', pair);
         ASSERT(pair.size() == 2);
-        target.push_back(pair[0]);
-        source.push_back(pair[1]);
+        if (!reverse) {
+          target.push_back(pair[0]);
+          source.push_back(pair[1]);
+        } else {
+          target.push_back(pair[1]);
+          source.push_back(pair[0]);
+        }
       }
     }
     cost = ngram.cost;

@@ -12,8 +12,8 @@ void TestBuildNgram() {
 
   // build ngram
   Builder builder;
-  if (!builder.Build("test-data/model.txt", "test-data/")) {
-    cout << "File test-data/model.txt is not found." << endl;
+  if (!builder.Build("test-data/ngram", "test-data/")) {
+    cout << "File test-data/ngram is not found." << endl;
     return;
   }
   
@@ -50,6 +50,20 @@ void TestDecoder() {
   Decoder &decoder = Decoder::GetDecoder();
   Model &model = Model::GetModel();
   model.LoadFromBinary("test-data/");
+  {
+    vector<Node> result;
+    string input("\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
+    ASSERT(decoder.Decode(input, result) == true);
+    ASSERT(result.size() == 1);
+    ASSERT(result[0].source.size() == 1);
+    ASSERT(result[0].target.size() == 1);
+    ASSERT(result[0].source[0] == "\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
+    ASSERT(result[0].target[0] == "\xe7\xa7\x81");  // "私"
+    ASSERT(result[0].cost == (int) (-500. * -1.021189));
+    ASSERT(result[0].backoff == (int) (-500. * -0.3853509));
+    ASSERT(result[0].total_cost == result[0].total_cost);
+    ASSERT(result[0].back_index == 0);
+  }
   {
     vector<Node> result;
     string input("\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"

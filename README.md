@@ -1,9 +1,56 @@
-JSC: Joint Souce Channel Model and Decoder
+JSC Decoder: Joint Souce Channel Decoder
 ===
 
+JSC Decoder is a monotonic decoder for joint source channel or joint n-gram model.
+
+A Joint Source-Channel Model for Machine Transliteration, Li Haizhou, Zhang Min, Su Jian.
+http://acl.ldc.upenn.edu/acl2004/main/pdf/121_pdf_2-col.pdf
+
+It can be used for machine transliteration, Japanese kana-kanji conversion, Chinese pinyin input or pronunciation inference.
+
+Requitement
+---
+
+marisa-trie version 0.2.0
+http://code.google.com/p/marisa-trie/
+
 Install
+---
+
 ./waf configure [--prefix=INSTALL_DIRECTORY]
 ./waf build
 sudo waf install
 
 Usage
+---
+
+### jsc-decode
+Convert source string from standard input to target string via joint source channel model.
+
+-d directory: specify data directory
+-f format: specify format (plain [default] or debug)
+-l: turn off sentence-beginning/ending label
+
+### jsc-build
+-d directory: specify data directory
+
+File format
+---
+
+ngram file should be SRILM format.
+http://www.speech.sri.com/projects/srilm/
+
+Target string and source string should be coupled with "/".
+
+    head test-data/ngram
+
+    \data\
+    ngram 1=15
+    ngram 2=19
+
+    \1-grams:
+    -0.845098       </s>
+    -99     <s>     -0.5351132
+    -1.322219       、/、   -0.2575643
+    -1.322219       あり/あり       -0.2798407
+

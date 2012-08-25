@@ -15,7 +15,7 @@ class Lattice {
  public:
   Lattice();
   virtual ~Lattice();
-  bool CreateLattice(vector<vector<Ngram> > &ngrams, string &key);
+  bool CreateLattice(vector<vector<Ngram> > &ngrams, string &key, bool reverse=false);
   bool AddBosNodes();
   // Currently, unknown characters are recognized as 1 byte words.
   // TODO: use UTF-8 character (3 byte) as unknown node.
