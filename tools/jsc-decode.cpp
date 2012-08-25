@@ -32,7 +32,7 @@ string ToStringPlain(vector<Node> &nodes) {
   return oss.str();
 }
 
-void Run(const char *prefix, const char *format, bool label, bool reverse) {
+void Run(const char *prefix, string format, bool label, bool reverse) {
   Model &model = Model::GetModel();
   cerr << "Now loading model...\n";
 
@@ -49,9 +49,9 @@ void Run(const char *prefix, const char *format, bool label, bool reverse) {
   while (getline(cin, line)) {
     vector<Node> result;
     decoder.Decode(line, result, label, reverse);
-    if (strcmp(format, "debug") == 0) {
+    if (format == "debug") {
       cout << ToStringDebug(result);
-    } else if (strcmp(format, "plain") == 0) {
+    } else if (format == "plain") {
       cout << ToStringPlain(result) << endl;
     }
   }
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
   string directory = "data";
   string format = "plain";
   bool label = true;
-  bool reverse = true;
+  bool reverse = false;
   int c;
   while ((c = getopt (argc, argv, "d:f:lr")) != -1) {
     switch (c) {
@@ -85,11 +85,11 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (*directory.end() != '/' && *directory.end() != '\\') {
+  if (directory[directory.size()-1] != '/' && directory[directory.size()-1] != '\\') {
     directory += '/';
   }
 
-  Run(directory.c_str(), format.c_str(), label, reverse);
+  Run(directory.c_str(), format, label, reverse);
 
   return 0;
 }
