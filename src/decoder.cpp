@@ -32,7 +32,7 @@ bool Decoder::Decode(string &input, vector<Node> &nodes, bool label, bool revers
 bool Decoder::SearchSubString(string &input, vector<vector<Ngram> > &result, bool label) {
   if (label) {
     input.insert(0,"");
-    input.append("");
+    input.append("");
   }
 
   result.resize(input.size());
@@ -57,25 +57,22 @@ bool Decoder::Viterbi(Lattice &lattice, vector<Node> &result) {
       uint32 best_cost = UINT_MAX;
       uint32 best_index = 0;
 
+      // search best cost
       for (uint32 k = 0; k < lattice.GetListSize(index); k++) {
         Node &previous = lattice.GetNode(index, k);
 
         // check consistency
-        if (current.GetOrder() != 1 &&
-            previous.GetTarget().find(current.GetContext()) == (size_t)-1)
+        if (previous.GetNgram().find(current.GetNgramContext()) == string::npos)
           continue;
 
-        // search best cost
-        uint32 total_cost = previous.total_cost;
-
-        if (best_cost == UINT_MAX || total_cost < best_cost) {
+        if (best_cost == UINT_MAX || previous.total_cost < best_cost) {
           best_index = k;
-          best_cost = total_cost;
+          best_cost = previous.total_cost;
         }
       }
 
       current.back_index = best_index;
-      current.total_cost = best_cost + current.cost;
+      current.total_cost += best_cost + current.cost;
     }
   }
 

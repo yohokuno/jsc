@@ -45,8 +45,11 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
 
     split(ngram.ngram, ' ', splited);
     for (uint32 i = 0; i < splited.size(); i++) {
-      if (splited[i] == "<s>" || splited[i] == "</s>" || splited[i] == "unk") {
+      if (splited[i] == "<s>") {
         ngram.source += "";
+      } else if (splited[i] == "</s>") {
+        ngram.source += "";
+      } else if (splited[i] == "unk") {
       } else {
         vector<string> pair;
         split(splited[i], '/', pair);
@@ -63,7 +66,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
 
     // parse cost
     if (result[0] == "-99") {
-      ngram.cost = (uint16) UINT_MAX;
+      ngram.cost = USHRT_MAX;
     } else {
       double cost;
       stringstream(result[0]) >> cost;
@@ -73,7 +76,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     // parse backoff
     if (result.size() == 3) {
       if (result[0] == "-99") {
-        ngram.backoff = (uint16) UINT_MAX;
+        ngram.backoff = USHRT_MAX;
       } else {
         double backoff;
         stringstream(result[2]) >> backoff;

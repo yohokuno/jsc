@@ -13,13 +13,13 @@ namespace jsc {
 //   Source trie: compressed trie of source side string
 //   Ngram trie: compressed trie of joint n-gram string
 //   Offsets array: array of offset in entry array
-//   Entry array: ngram cost, backoff cost and ngram ID in Ngram Trie).
+//   Entries array: ngram cost, backoff cost and ngram ID in Ngram Trie
 //
 // Actual search works like this:
-//   1) Search from source trie and get IDs in the trie.
-//   2) Get offset from array like: offset[ID]
-//   3) Get entries from array from entries[offset] to entries[offset+size-1].
-//   4) Get ngram by reverse lookup from ngram trie, using ngram ID in the entry.
+//   1) Search query from source trie and get source_id
+//   2) Get start and end index by offsets[source_id], offsets[source_id+1]-1
+//   3) Get entries from array from entries[start] to entries[end]
+//   4) Get ngram by reverse lookup from ngram trie,by ngram_id
 //   5) Return the dataset
 //
 class Model {

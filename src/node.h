@@ -20,7 +20,7 @@ struct Node {
   Node() {
     cost = 0;
     backoff = 0;
-    total_cost = INT_MAX / 2 - 1;
+    total_cost = 0;
     back_index = 0;
   }
 
@@ -28,8 +28,11 @@ struct Node {
     vector<string> splited;
     split(ngram.ngram, ' ', splited);
     for (uint32 i = 0; i < splited.size(); i++) {
-      if (splited[i] == "<s>" || splited[i] == "</s>" || splited[i] == "unk") {
+      if (splited[i] == "<s>") {
         source.push_back("");
+        target.push_back(splited[i]);
+      } else if (splited[i] == "</s>") {
+        source.push_back("");
         target.push_back(splited[i]);
       } else {
         vector<string> pair;
@@ -47,7 +50,7 @@ struct Node {
     cost = ngram.cost;
     backoff = ngram.backoff;
 
-    total_cost = INT_MAX / 2 - 1;
+    total_cost = 0;
     back_index = 0;
 
     ASSERT(source.size() == target.size());
@@ -65,6 +68,12 @@ struct Node {
       result += source[i].length();
     return result;
   }
+  string GetSource() {
+    string result;
+    for (uint32 i = 0; i < source.size(); i++)
+      result += source[i];
+    return result;
+  }
   string GetTarget() {
     string result;
     for (uint32 i = 0; i < target.size(); i++)
@@ -76,6 +85,18 @@ struct Node {
     for (uint32 i = 0; i < target.size()-1; i++)
       result += target[i];
     return result;
+  }
+  string GetNgramContext() {
+    string result;
+    for (uint32 i = 0; i < target.size()-1; i++)
+      result += source[i] + "/" + target[i] + " ";
+    return result.substr(0, result.size()-1);
+  }
+  string GetNgram() {
+    string result;
+    for (uint32 i = 0; i < source.size(); i++)
+      result += source[i] + "/" + target[i] + " ";
+    return result.substr(0, result.size()-1);
   }
 };
 

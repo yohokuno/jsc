@@ -28,7 +28,6 @@ bool Lattice::AddBosNodes() {
   Node bos;
   bos.source.push_back("_");
   bos.target.push_back("BOS");
-  bos.total_cost = 0;
   end_nodes_.front().push_back(bos);  // BOS node
   end_nodes_.back().push_back(bos);   // EOS node
   return true;
@@ -41,7 +40,6 @@ bool Lattice::AddUnknownNodes() {
       string s(1, key_[i-1]);
       unknown.source.push_back(s);
       unknown.target.push_back(s);
-      unknown.total_cost = INT_MAX;
       end_nodes_[i].push_back(unknown);
     }
   }
