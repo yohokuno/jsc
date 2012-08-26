@@ -34,6 +34,16 @@ Convert source string from standard input to target string via joint source chan
 ### jsc-build
 -d directory: specify data directory
 
+Japanese Kana Kanji Conversion
+--
+Default model is provided at data/ directory for Japanese Kana Kanji conversion.
+
+    jsc-decode
+    Now loading model...
+    Input:
+    わたしのなまえはなかのです。
+    わたしの名前は中野です。
+
 File format
 ---
 
