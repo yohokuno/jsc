@@ -60,7 +60,7 @@ void Run(const char *prefix, string format, bool label, bool reverse) {
 }
 
 int main(int argc, char **argv) {
-  string directory = "data";
+  string prefix = "data/";
   string format = "plain";
   bool label = true;
   bool reverse = false;
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
         reverse = true;
         break;
       case 'd':
-        directory = optarg;
+        prefix = optarg;
         break;
       case 'f':
         format = optarg;
@@ -85,11 +85,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (directory[directory.size()-1] != '/' && directory[directory.size()-1] != '\\') {
-    directory += '/';
-  }
-
-  Run(directory.c_str(), format, label, reverse);
+  Run(prefix.c_str(), format, label, reverse);
 
   return 0;
 }

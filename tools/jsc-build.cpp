@@ -4,13 +4,13 @@
 #include "builder.h"
 
 int main(int argc, char **argv) {
-  string directory = "data";
+  string prefix = "data/";
   bool reverse = false;
   int c;
   while ((c = getopt (argc, argv, "d:r")) != -1) {
     switch (c) {
       case 'd':
-        directory = optarg;
+        prefix = optarg;
         break;
       case 'r':
         reverse = true;
@@ -21,18 +21,12 @@ int main(int argc, char **argv) {
     }
   }
 
-  if (*directory.end() != '/' && *directory.end() != '\\') {
-    directory += '/';
-  }
-
-  cerr << "Directory: " << directory << endl;
-
   // build ngram binary file
   {
     jsc::Builder builder;
     const string model = "ngram";
     cerr << "Building model..." << endl;
-    bool result = builder.Build((directory+model).c_str(), directory.c_str(), reverse);
+    bool result = builder.Build((prefix+model).c_str(), prefix.c_str(), reverse);
     if (result) {
       cerr << "Succeeded to build model." << endl;
     } else {

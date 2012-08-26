@@ -4,6 +4,7 @@
 #include <string.h>
 #include <algorithm>
 #include <marisa.h>
+#include <limits.h>
 #include "builder.h"
 #include "ngram.h"
 #include "namespace.h"
@@ -61,15 +62,25 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     if (flag) continue;
 
     // parse cost
-    double cost;
-    stringstream(result[0]) >> cost;
-    ngram.cost = (uint16) (-500. * cost);
+    if (result[0] == "-99") {
+      ngram.cost = (uint16) UINT_MAX;
+    } else {
+      double cost;
+      stringstream(result[0]) >> cost;
+      ngram.cost = (uint16) (-500. * cost);
+    }
 
     // parse backoff
     if (result.size() == 3) {
-      double backoff;
-      stringstream(result[2]) >> backoff;
-      ngram.backoff = (int16) (-500. * backoff);
+      if (result[0] == "-99") {
+        ngram.backoff = (uint16) UINT_MAX;
+      } else {
+        double backoff;
+        stringstream(result[2]) >> backoff;
+        ngram.backoff = (int16) (-500. * backoff);
+      }
+    } else {
+      ngram.backoff = 0;
     }
 
     // add temporary data
