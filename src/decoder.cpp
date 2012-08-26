@@ -74,8 +74,8 @@ bool Decoder::Viterbi(Lattice &lattice, vector<Node> &result) {
         }
       }
 
-      lattice.GetNode(i, j).total_cost = best_cost + current.cost + current.backoff;
-      lattice.GetNode(i, j).back_index = best_index;
+      current.back_index = best_index;
+      current.total_cost = best_cost + current.cost;
     }
   }
 

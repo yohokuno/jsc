@@ -1,18 +1,18 @@
 JSC Decoder: Joint Souce Channel Decoder
 ===
 
-JSC Decoder is a monotonic decoder for joint source channel or joint n-gram model.
+*JSC Decoder* is a monotonic decoder for joint source channel or joint n-gram model.
 
-A Joint Source-Channel Model for Machine Transliteration, Li Haizhou, Zhang Min, Su Jian.
-
-http://acl.ldc.upenn.edu/acl2004/main/pdf/121_pdf_2-col.pdf
+    A Joint Source-Channel Model for Machine Transliteration, Li Haizhou, Zhang Min, Su Jian.
+    http://acl.ldc.upenn.edu/acl2004/main/pdf/121_pdf_2-col.pdf
 
 It can be used for machine transliteration, Japanese kana-kanji conversion, Chinese pinyin input or pronunciation inference.
 
-Requitement
+Requirement
 ---
 
     marisa-trie version 0.2.0
+
     http://code.google.com/p/marisa-trie/
 
 Install
@@ -27,15 +27,18 @@ Usage
 
 ### jsc-decode
 
-jsc-decode convert source string from standard input to target string via joint source channel model.
+*jsc-decode* command convert source string from standard input to target string via joint source channel model.
 
-    -d directory: specify data directory
+    -d directory: specify data directory or prefix
     -f format: specify format (plain [default] or debug)
     -l: turn off sentence-beginning/ending label
 
 ### jsc-build
 
-    -d directory: specify data directory
+*jsc-build* command build model files in binary format from n-gram file in text format. The file name of n-gram should be "ngram".
+
+    -d directory: specify data directory or prefix
+
 
 Japanese Kana Kanji Conversion
 --
