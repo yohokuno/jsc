@@ -1,14 +1,17 @@
 #include "jsc.h"
 using namespace jsc;
 
+#define TEST_DATA "test-data/"
+#define TEST_MODEL "test-data/ngram"
+
 // Build ngram binary from text file
 void TestBuildNgram() {
   TEST_START();
 
   // build ngram
   Builder builder;
-  if (!builder.Build("test-data/ngram", "test-data/")) {
-    cout << "File test-data/ngram is not found." << endl;
+  if (!builder.Build(TEST_MODEL, TEST_DATA)) {
+    cerr << "missing " << TEST_MODEL << endl;
     return;
   }
   
@@ -20,18 +23,24 @@ void TestModel() {
   TEST_START();
 
   Model &model = Model::GetModel();
-  if (!model.LoadFromBinary("test-data/")) {
-    cout << "Directory test-data/ or binary files under the directory is not found." << endl;
+  if (!model.LoadFromBinary(TEST_DATA)) {
+    cerr << "missing " << TEST_DATA << endl;
     return;
   }
-  string input("\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
-  vector<Ngram> result;
-  model.ExactSearch(input, result);
-  ASSERT(result.size() == 1);
-  ASSERT(result[0].source == "\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
-  ASSERT(result[0].ngram == "\xe7\xa7\x81/\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "私/わたし"
-  ASSERT(result[0].cost == (int) (-500. * -1.021189));
-  ASSERT(result[0].backoff == (int) (-500. * -0.3853509));
+  {
+    string input("a");
+    vector<Ngram> result;
+    model.ExactSearch(input, result);
+    ASSERT(result.size() == 2);
+    ASSERT(result[0].source == "a");
+    ASSERT(result[0].ngram == "A/a");
+    ASSERT(result[0].cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].backoff == (int) (-SCALE_COST * -1.));
+    ASSERT(result[1].source == "a");
+    ASSERT(result[1].ngram == "a/a");
+    ASSERT(result[1].cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[1].backoff == (int) (-SCALE_COST * -2.));
+  }
 
   model.Clear();
   TEST_END();
@@ -43,21 +52,49 @@ void TestDecoder() {
 
   Decoder &decoder = Decoder::GetDecoder();
   Model &model = Model::GetModel();
-  model.LoadFromBinary("test-data/");
-  vector<Node> result;
-  string input("\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
-  ASSERT(decoder.Decode(input, result, false) == true);
-  ASSERT(result.size() == 1);
-  ASSERT(result[0].source.size() == 1);
-  ASSERT(result[0].target.size() == 1);
-  ASSERT(result[0].source[0] == "\xe3\x82\x8f\xe3\x81\x9f\xe3\x81\x97"); // "わたし"
-  ASSERT(result[0].target[0] == "\xe7\xa7\x81");  // "私"
-  ASSERT(result[0].cost == (int) (-500. * -1.021189));
-  ASSERT(result[0].backoff == (int) (-500. * -0.3853509));
-  ASSERT(result[0].total_cost == result[0].total_cost);
-  ASSERT(result[0].back_index == 0);
-  model.Clear();
+  model.LoadFromBinary(TEST_DATA);
 
+  {
+    vector<Node> result;
+    string input("a");
+    ASSERT(decoder.Decode(input, result, false) == true);
+    ASSERT(result.size() == 1);
+    ASSERT(result[0].source.size() == 1);
+    ASSERT(result[0].target.size() == 1);
+    ASSERT(result[0].source[0] == "a");
+    ASSERT(result[0].target[0] == "A");
+    ASSERT(result[0].cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].backoff == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].total_cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].back_index == 0);
+  }
+  {
+    vector<Node> result;
+    string input("ab");
+    ASSERT(decoder.Decode(input, result, false) == true);
+    ASSERT(result.size() == 2);
+    ASSERT(result[0].source.size() == 1);
+    ASSERT(result[0].target.size() == 1);
+    ASSERT(result[0].source[0] == "a");
+    ASSERT(result[0].target[0] == "a");
+    ASSERT(result[0].cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].backoff == (int) (-SCALE_COST * -2.));
+    ASSERT(result[0].total_cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[0].back_index == 0);
+
+    ASSERT(result[1].source.size() == 2);
+    ASSERT(result[1].target.size() == 2);
+    ASSERT(result[1].source[0] == "a");
+    ASSERT(result[1].target[0] == "a");
+    ASSERT(result[1].source[1] == "b");
+    ASSERT(result[1].target[1] == "B");
+    ASSERT(result[1].cost == (int) (-SCALE_COST * -1.));
+    ASSERT(result[1].total_cost == (int) (-SCALE_COST * -4.));
+    ASSERT(result[1].backoff == 0);
+    ASSERT(result[1].back_index == 1);
+  }
+
+  model.Clear();
   TEST_END();
 }
 
