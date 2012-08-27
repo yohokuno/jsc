@@ -6,7 +6,7 @@ JSC: Joint Souce Channel Model and Decoder
     A Joint Source-Channel Model for Machine Transliteration, Li Haizhou, Zhang Min, Su Jian.
     http://acl.ldc.upenn.edu/acl2004/main/pdf/121_pdf_2-col.pdf
 
-It can be used for machine transliteration, Japanese kana-kanji conversion, Chinese pinyin input or pronunciation inference.
+It can be used for machine transliteration, Japanese kana-kanji conversion, Chinese pinyin input, English word segmentation or pronunciation inference.
 
 Requirement
 ---
@@ -19,7 +19,7 @@ Install
 
     $ ./waf configure [--prefix=INSTALL_DIRECTORY]
     $ ./waf build
-    $ sudo waf install
+    $ sudo ./waf install
 
 Usage
 ---
@@ -93,6 +93,7 @@ File format
 ---
 
 N-gram file should be SRILM format.
+
 http://www.speech.sri.com/projects/srilm/
 
 Target string and source string should be coupled with character '/'; e.g. "私/わたし"
