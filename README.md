@@ -1,7 +1,7 @@
-JSC Decoder: Joint Souce Channel Decoder
+JSC: Joint Souce Channel Model and Decoder
 ===
 
-**JSC Decoder** is a monotonic decoder for joint source channel or joint n-gram model.
+**JSC** is an implementation of joint source channel or joint n-gram model with monotonic decoder.
 
     A Joint Source-Channel Model for Machine Transliteration, Li Haizhou, Zhang Min, Su Jian.
     http://acl.ldc.upenn.edu/acl2004/main/pdf/121_pdf_2-col.pdf
@@ -60,17 +60,5 @@ File format
 N-gram file should be SRILM format.
 http://www.speech.sri.com/projects/srilm/
 
-Target string and source string should be coupled with character '/'.
-
-    head test-data/ngram
-
-    \data\
-    ngram 1=15
-    ngram 2=19
-
-    \1-grams:
-    -0.845098       </s>
-    -99     <s>     -0.5351132
-    -1.322219       、/、   -0.2575643
-    -1.322219       あり/あり       -0.2798407
+Target string and source string should be coupled with character '/'; e.g. "私/わたし"
 
