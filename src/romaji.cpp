@@ -6,8 +6,8 @@ string Romaji::Convert(string input) {
   string output;
   for (int i = 0; i < (int)input.size(); i++) {
     bool flag = false;
-    for (int j = 0; j < 3; j++) {
-      string query = input.substr(i, i+j+1);
+    for (int j = 2; j >= 0; j--) {
+      string query = input.substr(i, j+1);
       iterator result = this->find(query);
       if (result != this->end()) {
         output.append(result->second);

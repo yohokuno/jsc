@@ -16,7 +16,7 @@ class Lattice {
   bool AddBosNodes();
   // Currently, unknown characters are recognized as 1 byte words.
   // TODO: use UTF-8 character (3 byte) as unknown node.
-  bool AddUnknownNodes();
+  bool AddUnknownNodes(string key);
   vector<Node> &GetList(uint32_t position);
   uint32_t GetListSize(uint32_t position);
   Node &GetNode(uint32_t position, uint32_t index);
@@ -24,7 +24,6 @@ class Lattice {
 
  private:
   vector<vector<Node> > end_nodes_;
-  string key_;
 };
 
 }

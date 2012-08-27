@@ -9,7 +9,6 @@ Lattice::~Lattice() {
 }
 
 bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key) {
-  key_ = key;
   end_nodes_.resize(ngrams.size() + 2);
 
   for (uint32_t i = 0; i < ngrams.size(); i++) {
@@ -20,7 +19,7 @@ bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key) {
     }
   }
   AddBosNodes();
-  AddUnknownNodes();
+  AddUnknownNodes(key);
   return true;
 }
 
@@ -33,13 +32,14 @@ bool Lattice::AddBosNodes() {
   return true;
 }
 
-bool Lattice::AddUnknownNodes() {
+bool Lattice::AddUnknownNodes(string key) {
   for (uint32_t i = 0; i < end_nodes_.size(); i++) {
     if (end_nodes_[i].size() == 0) {
       Node unknown;
-      string s(1, key_[i-1]);
+      string s(1, key[i-1]);
       unknown.source.push_back(s);
       unknown.target.push_back(s);
+      unknown.cost = USHRT_MAX;
       end_nodes_[i].push_back(unknown);
     }
   }
