@@ -1,12 +1,7 @@
 #ifndef DECODER_H
 #define DECODER_H
 
-#include "namespace.h"
-#include "type.h"
-#include "ngram.h"
-#include "model.h"
-#include "node.h"
-#include "lattice.h"
+#include "jsc.h"
 
 namespace jsc {
 
@@ -22,7 +17,7 @@ class Decoder {
   Decoder();
   virtual ~Decoder();
 
-  bool Decode(string &input, vector<Node> &nodes, bool label=true, bool reverse=false);
+  bool Decode(string &input, vector<Node> &nodes, bool label=true);
 
   // Internal functions for Decode() method.
   bool SearchSubString(string &input, vector<vector<Ngram> > &result, bool label);
@@ -37,6 +32,9 @@ class Decoder {
  private:
   Model &model_;
 };
+
+string ToStringPlain(vector<Node> &nodes);
+string ToStringDebug(vector<Node> &nodes);
 
 }
 #endif

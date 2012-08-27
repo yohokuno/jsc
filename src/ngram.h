@@ -1,9 +1,7 @@
 #ifndef NGRAM_H
 #define NGRAM_H
 
-#include <string>
-#include "namespace.h"
-#include "type.h"
+#include "jsc.h"
 
 namespace jsc {
 
@@ -13,10 +11,10 @@ namespace jsc {
 struct Ngram {
   string source;
   string ngram;
-  uint16 cost;
-  uint16 backoff;
-  uint32 source_id;
-  uint32 ngram_id;
+  uint16_t cost;
+  uint16_t backoff;
+  uint32_t source_id;
+  uint32_t ngram_id;
 };
 
 // for sorting
@@ -26,9 +24,9 @@ inline bool CompareNgram (const Ngram &a, const Ngram &b) {
 
 // Information to lookup from source_id to cost, backoff and ngram_id.
 struct Entry {
-  uint16 cost;
-  uint16 backoff;
-  uint32 ngram_id;
+  uint16_t cost;
+  uint16_t backoff;
+  uint32_t ngram_id;
 };
 
 }

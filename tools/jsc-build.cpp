@@ -1,16 +1,19 @@
-#include <iostream>
-#include <unistd.h>
-#include "namespace.h"
-#include "builder.h"
+#include "jsc.h"
+using namespace jsc;
 
 int main(int argc, char **argv) {
   string prefix = "data/";
+  string model = "ngram";
+
   bool reverse = false;
   int c;
-  while ((c = getopt (argc, argv, "d:r")) != -1) {
+  while ((c = getopt (argc, argv, "d:m:r")) != -1) {
     switch (c) {
       case 'd':
         prefix = optarg;
+        break;
+      case 'm':
+        model = optarg;
         break;
       case 'r':
         reverse = true;
@@ -23,8 +26,7 @@ int main(int argc, char **argv) {
 
   // build ngram binary file
   {
-    jsc::Builder builder;
-    const string model = "ngram";
+    Builder builder;
     cerr << "Building model..." << endl;
     bool result = builder.Build((prefix+model).c_str(), prefix.c_str(), reverse);
     if (result) {

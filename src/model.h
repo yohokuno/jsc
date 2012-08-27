@@ -1,11 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <vector>
-#include <string>
-#include <marisa.h>
-#include "namespace.h"
-#include "ngram.h"
+#include "jsc.h"
 
 namespace jsc {
 
@@ -37,17 +33,17 @@ public:
   // Binary dictionary consists of files source.trie, ngram.trie, offset.bin and entry.bin.
   bool LoadFromBinary(const char *prefix);
   void Clear();
-  uint32 GetSize() { return (uint32)entries_.size(); }
+  uint32_t GetSize() { return (uint32_t)entries_.size(); }
 
   // Get reference from global object.
   static Model &GetModel();
 
 private:
-  void PushResult(uint32 source_id, string &query, vector<Ngram> &result);
+  void PushResult(uint32_t source_id, string &query, vector<Ngram> &result);
   marisa::Trie source_trie_;
   marisa::Trie ngram_trie_;
   vector<Entry> entries_;
-  vector<uint32> offsets_;
+  vector<uint32_t> offsets_;
 };
 
 }

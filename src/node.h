@@ -1,21 +1,17 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <limits.h>
-#include "namespace.h"
-#include "util.h"
-#include "assert.h"
-#include "ngram.h"
+#include "jsc.h"
 
 namespace jsc {
 
 struct Node {
   vector<string> source;
   vector<string> target;
-  uint32 cost;
-  uint32 backoff;
-  uint32 total_cost;
-  uint32 back_index;
+  uint32_t cost;
+  uint32_t backoff;
+  uint32_t total_cost;
+  uint32_t back_index;
 
   Node() {
     cost = 0;
@@ -24,27 +20,22 @@ struct Node {
     back_index = 0;
   }
 
-  Node(Ngram &ngram, bool reverse=false) {
+  Node(Ngram &ngram) {
     vector<string> splited;
-    split(ngram.ngram, ' ', splited);
-    for (uint32 i = 0; i < splited.size(); i++) {
-      if (splited[i] == "<s>") {
-        source.push_back("");
+    split(ngram.ngram, NGRAM_SEPARATOR, splited);
+    for (uint32_t i = 0; i < splited.size(); i++) {
+      if (splited[i] == LABEL_BEGIN) {
+        source.push_back(SOURCE_BEGIN);
         target.push_back(splited[i]);
-      } else if (splited[i] == "</s>") {
-        source.push_back("");
+      } else if (splited[i] == LABEL_END) {
+        source.push_back(SOURCE_END);
         target.push_back(splited[i]);
       } else {
         vector<string> pair;
-        split(splited[i], '/', pair);
+        split(splited[i], PAIR_SEPARATOR, pair);
         ASSERT(pair.size() == 2);
-        if (!reverse) {
-          target.push_back(pair[0]);
-          source.push_back(pair[1]);
-        } else {
-          target.push_back(pair[1]);
-          source.push_back(pair[0]);
-        }
+        target.push_back(pair[0]);
+        source.push_back(pair[1]);
       }
     }
     cost = ngram.cost;
@@ -56,46 +47,46 @@ struct Node {
     ASSERT(source.size() == target.size());
   }
 
-  uint32 GetOrder() {
+  uint32_t GetOrder() {
     return source.size();
   }
-  uint32 GetLength() {
+  uint32_t GetLength() {
     return source.back().length();
   }
-  uint32 GetTotalLength() {
-    uint32 result = 0;
-    for (uint32 i = 0; i < source.size(); i++)
+  uint32_t GetTotalLength() {
+    uint32_t result = 0;
+    for (uint32_t i = 0; i < source.size(); i++)
       result += source[i].length();
     return result;
   }
   string GetSource() {
     string result;
-    for (uint32 i = 0; i < source.size(); i++)
+    for (uint32_t i = 0; i < source.size(); i++)
       result += source[i];
     return result;
   }
   string GetTarget() {
     string result;
-    for (uint32 i = 0; i < target.size(); i++)
+    for (uint32_t i = 0; i < target.size(); i++)
       result += target[i];
     return result;
   }
   string GetContext() {
     string result;
-    for (uint32 i = 0; i < target.size()-1; i++)
+    for (uint32_t i = 0; i < target.size()-1; i++)
       result += target[i];
     return result;
   }
   string GetNgramContext() {
     string result;
-    for (uint32 i = 0; i < source.size()-1; i++)
-      result += target[i] + "/" + source[i] + " ";
+    for (uint32_t i = 0; i < source.size()-1; i++)
+      result += target[i] + PAIR_SEPARATOR + source[i] + NGRAM_SEPARATOR;
     return result.substr(0, result.size()-1);
   }
   string GetNgram() {
     string result;
-    for (uint32 i = 0; i < source.size(); i++)
-      result += target[i] + "/" + source[i] + " ";
+    for (uint32_t i = 0; i < source.size(); i++)
+      result += target[i] + PAIR_SEPARATOR + source[i] + NGRAM_SEPARATOR;
     return result.substr(0, result.size()-1);
   }
 };

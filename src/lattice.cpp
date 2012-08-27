@@ -1,4 +1,4 @@
-#include "lattice.h"
+#include "jsc.h"
 
 namespace jsc {
 
@@ -8,14 +8,14 @@ Lattice::Lattice() {
 Lattice::~Lattice() {
 }
 
-bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key, bool reverse) {
+bool Lattice::CreateLattice(vector<vector<Ngram> > &ngrams, string &key) {
   key_ = key;
   end_nodes_.resize(ngrams.size() + 2);
 
-  for (uint32 i = 0; i < ngrams.size(); i++) {
-    for (uint32 j = 0; j < ngrams[i].size(); j++) {
-      Node node(ngrams[i][j], reverse);
-      uint32 position = i + node.GetTotalLength();
+  for (uint32_t i = 0; i < ngrams.size(); i++) {
+    for (uint32_t j = 0; j < ngrams[i].size(); j++) {
+      Node node(ngrams[i][j]);
+      uint32_t position = i + node.GetTotalLength();
       end_nodes_[position].push_back(node);
     }
   }
@@ -34,7 +34,7 @@ bool Lattice::AddBosNodes() {
 }
 
 bool Lattice::AddUnknownNodes() {
-  for (uint32 i = 0; i < end_nodes_.size(); i++) {
+  for (uint32_t i = 0; i < end_nodes_.size(); i++) {
     if (end_nodes_[i].size() == 0) {
       Node unknown;
       string s(1, key_[i-1]);
@@ -46,17 +46,17 @@ bool Lattice::AddUnknownNodes() {
   return true;
 }
 
-vector<Node> &Lattice::GetList(uint32 position) {
+vector<Node> &Lattice::GetList(uint32_t position) {
   return end_nodes_[position];
 }
-uint32 Lattice::GetListSize(uint32 position) {
+uint32_t Lattice::GetListSize(uint32_t position) {
   return end_nodes_[position].size();
 }
-Node &Lattice::GetNode(uint32 position, uint32 index) {
+Node &Lattice::GetNode(uint32_t position, uint32_t index) {
   return end_nodes_[position][index];
 }
-uint32 Lattice::GetSize() {
-  return (uint32) end_nodes_.size();
+uint32_t Lattice::GetSize() {
+  return (uint32_t) end_nodes_.size();
 }
 
 }

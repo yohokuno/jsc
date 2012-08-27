@@ -1,16 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string.h>
-#include <algorithm>
-#include <marisa.h>
-#include <limits.h>
-#include "builder.h"
-#include "ngram.h"
-#include "namespace.h"
-#include "type.h"
-#include "util.h"
-#include "assert.h"
+#include "jsc.h"
 
 namespace jsc {
 
@@ -43,16 +31,17 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     vector<string> splited;
     bool flag = false;
 
-    split(ngram.ngram, ' ', splited);
-    for (uint32 i = 0; i < splited.size(); i++) {
-      if (splited[i] == "<s>") {
-        ngram.source += "";
-      } else if (splited[i] == "</s>") {
-        ngram.source += "";
-      } else if (splited[i] == "unk") {
+    split(ngram.ngram, NGRAM_SEPARATOR, splited);
+    for (uint32_t i = 0; i < splited.size(); i++) {
+      if (splited[i] == LABEL_BEGIN) {
+        ngram.source += SOURCE_BEGIN;
+      } else if (splited[i] == LABEL_END) {
+        ngram.source += SOURCE_END;
+      } else if (splited[i] == LABEL_UNK) {
+        ngram.source += SOURCE_UNK;
       } else {
         vector<string> pair;
-        split(splited[i], '/', pair);
+        split(splited[i], PAIR_SEPARATOR, pair);
         if (pair.size() == 2) {
           if (!reverse)
             ngram.source += pair[1];
@@ -65,22 +54,22 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     if (flag) continue;
 
     // parse cost
-    if (result[0] == "-99") {
+    if (result[0] == MAX_COST) {
       ngram.cost = USHRT_MAX;
     } else {
       double cost;
       stringstream(result[0]) >> cost;
-      ngram.cost = (uint16) (-500. * cost);
+      ngram.cost = (uint16_t) (-SCALE_COST * cost);
     }
 
     // parse backoff
     if (result.size() == 3) {
-      if (result[0] == "-99") {
+      if (result[0] == MAX_COST) {
         ngram.backoff = USHRT_MAX;
       } else {
         double backoff;
         stringstream(result[2]) >> backoff;
-        ngram.backoff = (int16) (-500. * backoff);
+        ngram.backoff = (uint16_t) (-SCALE_COST * backoff);
       }
     } else {
       ngram.backoff = 0;
@@ -96,7 +85,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   source_trie.build(source_keyset);
   {
     string file(prefix);
-    file.append("source.trie");
+    file.append(SOURCE_TRIE);
     source_trie.save(file.c_str());
   }
 
@@ -106,14 +95,14 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   ngram_trie.build(ngram_keyset);
   {
     string file(prefix);
-    file.append("ngram.trie");
+    file.append(NGRAM_TRIE);
     ngram_trie.save(file.c_str());
   }
 
   // Each ngram needs ID in source trie for sort,
   // and needs ID in ngram_trie for reverse lookup.
   // So, both IDs are appended to Ngram after building both source and ngram tries.
-  for (uint32 i = 0; i < ngrams.size(); i++) {
+  for (uint32_t i = 0; i < ngrams.size(); i++) {
     // lookup source_id from source_trie_
     {
       marisa::Agent agent;
@@ -149,11 +138,11 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   sort(ngrams.begin(), ngrams.end(), CompareNgram);
 
   // build entries and offsets
-  uint32 length = 0;
-  uint32 source_id = ngrams.at(0).source_id;
+  uint32_t length = 0;
+  uint32_t source_id = ngrams.at(0).source_id;
   vector<Entry> entries;
-  vector<uint32> offsets;
-  for (uint32 i = 0; i < ngrams.size(); i++) {
+  vector<uint32_t> offsets;
+  for (uint32_t i = 0; i < ngrams.size(); i++) {
 
     // initialize Entry element
     Ngram &ngram = ngrams.at(i);
@@ -164,7 +153,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
 
     // if current source is different from previous source, add offset and reflesh length
     if (source_id != ngrams.at(i).source_id) {
-      uint32 offset = i-length;
+      uint32_t offset = i-length;
       offsets.push_back(offset);
       length = 0;
       source_id = ngrams.at(i).source_id;
@@ -173,7 +162,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   }
   // add last offset
   {
-    uint32 offset = ngrams.size()-length;
+    uint32_t offset = ngrams.size()-length;
     offsets.push_back(offset);
 
     // We have to add entire size finally to calculate size of last ngram
@@ -182,10 +171,10 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   // save offset array as binary file
   {
     string file_offset(prefix);
-    file_offset.append("offset.bin");
+    file_offset.append(OFFSET_FILE);
     ofstream ofs_offset(file_offset.c_str(), ios_base::out | ios_base::binary);
 
-    for (uint32 i = 0; i < offsets.size(); i++) {
+    for (uint32_t i = 0; i < offsets.size(); i++) {
       ofs_offset.write((const char*)&offsets.at(i), sizeof(offsets.at(i)));
     }
     ofs_offset.close();
@@ -193,10 +182,10 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   // save Entry array as binary file
   {
     string file_entry(prefix);
-    file_entry.append("entry.bin");
+    file_entry.append(ENTRY_FILE);
     ofstream ofs_entry(file_entry.c_str(), ios_base::out | ios_base::binary);
 
-    for (uint32 i = 0; i < entries.size(); i++) {
+    for (uint32_t i = 0; i < entries.size(); i++) {
       ofs_entry.write((const char*)&entries.at(i), sizeof(entries.at(i)));
     }
     ofs_entry.close();
