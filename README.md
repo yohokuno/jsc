@@ -40,9 +40,9 @@ Usage
 
 
 Japanese Kana Kanji Conversion
---
+---
 
-Default model is provided at data/ directory for Japanese Kana Kanji conversion.
+For Japanese Kana Kanji conversion, a default model is provided at data/ directory 
 
     jsc-decode
     Now loading model...
@@ -53,6 +53,21 @@ Default model is provided at data/ directory for Japanese Kana Kanji conversion.
     今日は良い天気ですね。
     あらゆるげんじつをすべてじぶんのほうへねじまげたのだ。
     あらゆる現実をすべて自分のほうへネジ曲げたのだ。
+
+Chinese Pinyin Input
+---
+
+For Chinese Pinyin input, a default model is provided at chinese/ directory 
+
+    jsc-decode -d chinese/
+    Now loading model...
+    Input:
+    nihao
+    你好
+    woaini
+    我爱你
+    ziranyuyanchuli
+    自然语言处理
 
 File format
 ---
