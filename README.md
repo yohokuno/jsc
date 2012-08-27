@@ -28,6 +28,7 @@ Usage
 
 **jsc-decode** command convert source string from standard input to target string via joint source channel model.
 
+    options:
     -d directory: specify data directory or prefix (default: ./)
     -f format: specify format (segment [default], plain, debug)
     -r romaji: specify romaji mode (both [default], on, off)
@@ -37,6 +38,7 @@ Usage
 
 **jsc-build** command build model files in binary format from n-gram file in text format.
 
+    options:
     -d directory: specify data directory or prefix (default: ./)
     -m model: specify model file name (default: ngram)
     -r: build reverse model
@@ -44,7 +46,7 @@ Usage
 Japanese Kana Kanji Conversion
 ---
 
-For Japanese Kana Kanji conversion, a model is provided at data/japanese directory.
+For Japanese Kana Kanji conversion, a model is provided at data/japanese directory. By default, both romaji and hiragana input are allowed.
 
     $ jsc-decode -d data/japanese/
     わたしのなまえはなかのです。
@@ -68,7 +70,7 @@ English word segmentation / automatic capitalization
 
 For English input, a model is provided at data/english/ directory.
 
-    $ jsc-decode -d data/english
+    $ jsc-decode -d data/english/
     alicewasbeginningtogetverytiredofsittingbyhersisteronthebank
     Alice was beginning to get very tired of sitting by her sister on the bank
     istandheretodayhumbledbythetaskbeforeusgratefulforthetrustyouhavebestowedmindfulofthesacrificesbornebyourancestors
@@ -77,15 +79,15 @@ For English input, a model is provided at data/english/ directory.
 Mixed Input
 ---
 
-For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory.
+For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory. The language is detected automatically.
 
-    $ jsc-decode -d data/mixed
+    $ jsc-decode -d data/mixed/
     thisisapen
     This is a pen
     kyouhayoitenkidesune
     今日 は 良い 天気 です ね
-    wobushizhongguoren
-    我 不 是 中国 人
+    woshizhongguoren
+    我 是 中国 人
 
 File format
 ---
