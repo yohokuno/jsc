@@ -17,7 +17,7 @@ class Decoder {
   Decoder();
   virtual ~Decoder();
 
-  bool Decode(string &input, vector<Node> &nodes, bool label=true);
+  bool Decode(string input, vector<Node> &nodes, bool label=true);
 
   // Internal functions for Decode() method.
   bool SearchSubString(string &input, vector<vector<Ngram> > &result, bool label);

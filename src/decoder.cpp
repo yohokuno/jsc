@@ -9,7 +9,7 @@ Decoder::Decoder()
 Decoder::~Decoder() {
 }
 
-bool Decoder::Decode(string &input, vector<Node> &nodes, bool label) {
+bool Decoder::Decode(string input, vector<Node> &nodes, bool label) {
   vector<vector<Ngram> > ngrams;
 
   if (!SearchSubString(input, ngrams, label)) {
