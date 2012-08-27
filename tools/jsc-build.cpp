@@ -2,7 +2,7 @@
 using namespace jsc;
 
 int main(int argc, char **argv) {
-  string prefix = "data/";
+  string prefix = "./";
   string model = "ngram";
 
   bool reverse = false;

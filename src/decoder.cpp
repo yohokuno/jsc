@@ -105,6 +105,14 @@ string ToStringPlain(vector<Node> &nodes) {
   return oss.str();
 }
 
+string ToStringSegment(vector<Node> &nodes) {
+  ostringstream oss;
+  for (int i = 0; i < (int) nodes.size(); i++) {
+    oss << nodes[i].target.back() << " ";
+  }
+  return oss.str().substr();
+}
+
 string ToStringDebug(vector<Node> &nodes) {
   ostringstream oss;
   for (int i = 0; i < (int) nodes.size(); i++) {

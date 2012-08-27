@@ -3,7 +3,6 @@ using namespace jsc;
 
 void Run(string prefix, string format, bool label, string romaji) {
   Model &model = Model::GetModel();
-  cerr << "Now loading model...\n";
 
   if (!model.LoadFromBinary(prefix.c_str())) {
     cerr << "Model " << prefix << "is not found." << endl;
@@ -15,9 +14,7 @@ void Run(string prefix, string format, bool label, string romaji) {
   if (romaji == "both" || romaji == "on")
     table.Load(prefix + "romaji.txt");
 
-  cerr << "Input:\n";
   string line;
-
   while (getline(cin, line)) {
     vector<Node> result;
     if (romaji == "off") {
@@ -47,6 +44,8 @@ void Run(string prefix, string format, bool label, string romaji) {
       cout << ToStringPlain(result) << endl;
     } else if (format == "plain") {
       cout << ToStringPlain(result) << endl;
+    } else if (format == "segment") {
+      cout << ToStringSegment(result) << endl;
     }
   }
 
@@ -54,8 +53,8 @@ void Run(string prefix, string format, bool label, string romaji) {
 }
 
 int main(int argc, char **argv) {
-  string prefix = "data/";
-  string format = "plain";
+  string prefix = "./";
+  string format = "segment";
   string romaji = "both";
   bool label = true;
   int c;

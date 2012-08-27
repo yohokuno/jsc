@@ -28,46 +28,64 @@ Usage
 
 **jsc-decode** command convert source string from standard input to target string via joint source channel model.
 
-    -d directory: specify data directory or prefix
-    -f format: specify format (plain [default] or debug)
+    -d directory: specify data directory or prefix (default: ./)
+    -f format: specify format (segment [default], plain, debug)
+    -r romaji: specify romaji mode (both [default], on, off)
     -l: turn off sentence-beginning/ending label
 
 ### jsc-build
 
-**jsc-build** command build model files in binary format from n-gram file in text format. The file name of n-gram should be "ngram".
+**jsc-build** command build model files in binary format from n-gram file in text format.
 
-    -d directory: specify data directory or prefix
-
+    -d directory: specify data directory or prefix (default: ./)
+    -m model: specify model file name (default: ngram)
+    -r: build reverse model
 
 Japanese Kana Kanji Conversion
 ---
 
-For Japanese Kana Kanji conversion, a default model is provided at data/ directory 
+For Japanese Kana Kanji conversion, a model is provided at data/japanese directory.
 
-    jsc-decode
-    Now loading model...
-    Input:
+    jsc-decode -d data/japanese/
     わたしのなまえはなかのです。
-    わたしの名前は中野です。
-    きょうはよいてんきですね。
-    今日は良い天気ですね。
-    あらゆるげんじつをすべてじぶんのほうへねじまげたのだ。
-    あらゆる現実をすべて自分のほうへネジ曲げたのだ。
+    わたし の 名前 は 中野 です 。
+    arayurugenjitsuwosubetejibunnnohouhenejimagetanoda
+    あらゆる 現実 を 全て 自分 の ほう へ ネジ 曲げ た の だ
 
 Chinese Pinyin Input
 ---
 
-For Chinese Pinyin input, a default model is provided at chinese/ directory 
+For Chinese Pinyin input, a model is provided at data/chinese/ directory.
 
-    jsc-decode -d chinese/
-    Now loading model...
-    Input:
-    nihao
-    你好
-    woaini
-    我爱你
-    ziranyuyanchuli
-    自然语言处理
+    jsc-decode -d data/chinese/
+    woaiziranyuyanchuli
+    我 爱 自然 语言 处理
+    zhejianshitagegehaibuzhidaone
+    这 件 事 她 哥哥 海部 知道 呢
+
+English word segmentation / automatic capitalization
+---
+
+For English input, a model is provided at data/english/ directory.
+
+    jsc-decode -d data/english
+    alicewasbeginningtogetverytiredofsittingbyhersisteronthebank
+    Alice was beginning to get very tired of sitting by her sister on the bank
+    istandheretodayhumbledbythetaskbeforeusgratefulforthetrustyouhavebestowedmindfulofthesacrificesbornebyourancestors
+    I Stand here today humbled by the task before us grateful for the trust you have bestowed mindful of the sacrifices borne by our ancestors 
+
+Mixed Input
+---
+
+For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory.
+
+    jsc-decode -d data/mixed
+    thisisapen
+    This is a pen
+    kyouhayoitenkidesune
+    今日 は 良い 天気 です ね
+    wobushizhongguoren
+    我 不 是 中国 人
 
 File format
 ---

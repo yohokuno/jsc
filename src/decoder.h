@@ -34,6 +34,7 @@ class Decoder {
 };
 
 string ToStringPlain(vector<Node> &nodes);
+string ToStringSegment(vector<Node> &nodes);
 string ToStringDebug(vector<Node> &nodes);
 
 }

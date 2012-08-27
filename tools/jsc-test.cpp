@@ -1,8 +1,8 @@
 #include "jsc.h"
 using namespace jsc;
 
-#define TEST_DATA "test-data/"
-#define TEST_MODEL "test-data/ngram"
+#define TEST_DATA "data/test/"
+#define TEST_MODEL "data/test/ngram"
 
 // Build ngram binary from text file
 void TestBuildNgram() {
