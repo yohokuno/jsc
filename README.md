@@ -17,9 +17,9 @@ Requirement
 Install
 ---
 
-    ./waf configure [--prefix=INSTALL_DIRECTORY]
-    ./waf build
-    sudo waf install
+    $ ./waf configure [--prefix=INSTALL_DIRECTORY]
+    $ ./waf build
+    $ sudo waf install
 
 Usage
 ---
@@ -46,7 +46,7 @@ Japanese Kana Kanji Conversion
 
 For Japanese Kana Kanji conversion, a model is provided at data/japanese directory.
 
-    jsc-decode -d data/japanese/
+    $ jsc-decode -d data/japanese/
     わたしのなまえはなかのです。
     わたし の 名前 は 中野 です 。
     arayurugenjitsuwosubetejibunnnohouhenejimagetanoda
@@ -57,7 +57,7 @@ Chinese Pinyin Input
 
 For Chinese Pinyin input, a model is provided at data/chinese/ directory.
 
-    jsc-decode -d data/chinese/
+    $ jsc-decode -d data/chinese/
     woaiziranyuyanchuli
     我 爱 自然 语言 处理
     zhejianshitagegehaibuzhidaone
@@ -68,7 +68,7 @@ English word segmentation / automatic capitalization
 
 For English input, a model is provided at data/english/ directory.
 
-    jsc-decode -d data/english
+    $ jsc-decode -d data/english
     alicewasbeginningtogetverytiredofsittingbyhersisteronthebank
     Alice was beginning to get very tired of sitting by her sister on the bank
     istandheretodayhumbledbythetaskbeforeusgratefulforthetrustyouhavebestowedmindfulofthesacrificesbornebyourancestors
@@ -79,7 +79,7 @@ Mixed Input
 
 For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory.
 
-    jsc-decode -d data/mixed
+    $ jsc-decode -d data/mixed
     thisisapen
     This is a pen
     kyouhayoitenkidesune
