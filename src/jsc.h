@@ -7,6 +7,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <marisa.h>
 
@@ -17,6 +18,7 @@
 #include "lattice.h"
 #include "model.h"
 #include "decoder.h"
+#include "romaji.h"
 
 #endif
 

@@ -1,22 +1,25 @@
 #include "jsc.h"
 using namespace jsc;
 
-void Run(const char *prefix, string format, bool label) {
+void Run(string prefix, string format, bool label) {
   Model &model = Model::GetModel();
   cerr << "Now loading model...\n";
 
-  if (!model.LoadFromBinary(prefix)) {
+  if (!model.LoadFromBinary(prefix.c_str())) {
     cerr << "Model " << prefix << "is not found." << endl;
     return;
   }
 
   Decoder &decoder = Decoder::GetDecoder();
+  Romaji romaji = Romaji();
+  romaji.Load(prefix + "romaji.txt");
 
   cerr << "Input:\n";
   string line;
 
   while (getline(cin, line)) {
     vector<Node> result;
+    line = romaji.Convert(line);
     decoder.Decode(line, result, label);
     if (format == "debug") {
       cout << ToStringPlain(result) << endl;
@@ -51,7 +54,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  Run(prefix.c_str(), format, label);
+  Run(prefix, format, label);
 
   return 0;
 }

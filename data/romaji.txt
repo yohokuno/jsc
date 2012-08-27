@@ -48,7 +48,6 @@ wi	うぃ
 wu	う
 we	うぇ
 wo	を
-
 ga	が
 gi	ぎ
 gu	ぐ
@@ -99,7 +98,6 @@ vi	ヴぃ
 vu	ヴ
 ve	ヴぇ
 vo	ヴぉ
-
 kya	きゃ
 kyi	きぃ
 kyu	きゅ
@@ -185,7 +183,6 @@ fyi	ふぃ
 fyu	ふゅ
 fye	ふぇ
 fyo	ふょ
-
 sha	しゃ
 shi	し
 shu	しゅ
@@ -211,7 +208,6 @@ whi	うぃ
 whu	う
 whe	うぇ
 who	うぉ
-
 kwa	くぁ
 kwi	くぃ
 kwu	くぅ
@@ -247,13 +243,11 @@ fwi	ふぃ
 fwu	ふぅ
 fwe	ふぇ
 fwo	ふぉ
-
 tsa	つぁ
 tsi	つぃ
 tsu	つ
 tse	つぇ
 tso	つぉ
-
 la	ぁ
 li	ぃ
 lu	ぅ
@@ -264,7 +258,6 @@ lyi	ぃ
 lyu	ゅ
 lye	ぇ
 lyo	ょ
-
 xa	ぁ
 xi	ぃ
 xu	ぅ
@@ -275,40 +268,14 @@ xyi	ぃ
 xyu	ゅ
 xye	ぇ
 xyo	ょ
-
 lwa	ゎ
 xwa	ゎ
-
 lka	ヵ
 xka	ヵ
 lke	ヶ
 xke	ヶ
-
 ltu	っ
-ltsu	っ
 xtu	っ
-
 nn	ん
 n’	ん
 xn	ん
-nb	ん	b
-nc	ん	c
-nd	ん	d
-nf	ん	f
-ng	ん	g
-nh	ん	h
-nj	ん	j
-nk	ん	k
-nl	ん	l
-nm	ん	m
-np	ん	p
-nq	ん	q
-nr	ん	r
-ns	ん	s
-nt	ん	t
-nv	ん	v
-nw	ん	w
-nx	ん	x
-nz	ん	z
-n-	ん	-
-n@	ん	@
