@@ -62,17 +62,22 @@ bool Decoder::Viterbi(Lattice &lattice, vector<Node> &result) {
         Node &previous = lattice.GetNode(index, k);
 
         // check consistency
-        if (previous.GetNgram().find(current.GetNgramContext()) == string::npos)
+        size_t result = previous.GetNgram().find(current.GetNgramContext());
+        if (result == string::npos)
           continue;
 
-        if (best_cost == UINT_MAX || previous.total_cost < best_cost) {
+        uint32 total_cost = previous.total_cost;
+        if (result == 0)
+          total_cost += previous.backoff;
+
+        if (best_cost == UINT_MAX || total_cost < best_cost) {
           best_index = k;
-          best_cost = previous.total_cost;
+          best_cost = total_cost;
         }
       }
 
       current.back_index = best_index;
-      current.total_cost += best_cost + current.cost;
+      current.total_cost = best_cost + current.cost;
     }
   }
 

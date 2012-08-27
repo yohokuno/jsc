@@ -51,6 +51,8 @@ Default model is provided at data/ directory for Japanese Kana Kanji conversion.
     わたしの名前は中野です。
     きょうはよいてんきですね。
     今日は良い天気ですね。
+    あらゆるげんじつをすべてじぶんのほうへねじまげたのだ。
+    あらゆる現実をすべて自分のほうへネジ曲げたのだ。
 
 File format
 ---

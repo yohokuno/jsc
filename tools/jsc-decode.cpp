@@ -5,6 +5,14 @@
 #include "assert.h"
 using namespace jsc;
 
+string ToStringPlain(vector<Node> &nodes) {
+  ostringstream oss;
+  for (uint32 i = 0; i < nodes.size(); i++) {
+    oss << nodes[i].target.back();
+  }
+  return oss.str();
+}
+
 string ToStringDebug(vector<Node> &nodes) {
   ostringstream oss;
   for (uint32 i = 0; i < nodes.size(); i++) {
@@ -18,16 +26,8 @@ string ToStringDebug(vector<Node> &nodes) {
       << nodes[i].cost << ", "
       << nodes[i].backoff << ", "
       << nodes[i].total_cost << ", "
-      << nodes[i].back_index << ", "
+      << nodes[i].back_index
       << ")\n";
-  }
-  oss << "\n";
-  return oss.str();
-}
-string ToStringPlain(vector<Node> &nodes) {
-  ostringstream oss;
-  for (uint32 i = 0; i < nodes.size(); i++) {
-    oss << nodes[i].target.back();
   }
   return oss.str();
 }
@@ -50,7 +50,8 @@ void Run(const char *prefix, string format, bool label, bool reverse) {
     vector<Node> result;
     decoder.Decode(line, result, label, reverse);
     if (format == "debug") {
-      cout << ToStringDebug(result);
+      cout << ToStringPlain(result) << endl;
+      cout << ToStringDebug(result) << endl;
     } else if (format == "plain") {
       cout << ToStringPlain(result) << endl;
     }

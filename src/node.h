@@ -88,14 +88,14 @@ struct Node {
   }
   string GetNgramContext() {
     string result;
-    for (uint32 i = 0; i < target.size()-1; i++)
-      result += source[i] + "/" + target[i] + " ";
+    for (uint32 i = 0; i < source.size()-1; i++)
+      result += target[i] + "/" + source[i] + " ";
     return result.substr(0, result.size()-1);
   }
   string GetNgram() {
     string result;
     for (uint32 i = 0; i < source.size(); i++)
-      result += source[i] + "/" + target[i] + " ";
+      result += target[i] + "/" + source[i] + " ";
     return result.substr(0, result.size()-1);
   }
 };
