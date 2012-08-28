@@ -88,6 +88,8 @@ For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ dir
     今日 は 良い 天気 です ね
     woshizhongguoren
     我 是 中国 人
+    thisishaochi!
+    This is 好吃 !
 
 File format
 ---
