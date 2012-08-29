@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   {
     Builder builder;
     cerr << "Building model..." << endl;
-    bool result = builder.Build((prefix+model).c_str(), prefix.c_str(), reverse);
+    bool result = builder.Build(model.c_str(), prefix.c_str(), reverse);
     if (result) {
       cerr << "Succeeded to build model." << endl;
     } else {
