@@ -11,11 +11,15 @@ It can be used for machine transliteration, Japanese kana-kanji conversion, Chin
 Requirement
 ---
 
+JSC requires Unix, gcc, python and marisa-trie.
+
     marisa-trie version 0.2.0
     http://code.google.com/p/marisa-trie/
 
 Install
 ---
+
+To install JSC, type these commands into your console.
 
     $ ./waf configure [--prefix=INSTALL_DIRECTORY]
     $ ./waf build
@@ -96,7 +100,20 @@ File format
 
 N-gram file should be SRILM format.
 
-http://www.speech.sri.com/projects/srilm/
+    http://www.speech.sri.com/projects/srilm/
 
 Target string and source string should be coupled with character '/'; e.g. "私/わたし"
+
+Directories
+---
+
+Top directory contains these files and directories:
+
+    README.md   this file
+    build/      built by waf automatically
+    data/       model files
+    src/        source and header files for C++
+    tools/      command tools by C++
+    waf         waf build script
+    wscript     waf settings
 
