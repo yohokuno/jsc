@@ -11,6 +11,8 @@ Decoder::~Decoder() {
 
 bool Decoder::Decode(string input, vector<Node> &nodes, bool label) {
   vector<vector<Ngram> > ngrams;
+  if (input.size() == 0)
+    return true;
 
   if (!SearchSubString(input, ngrams, label)) {
     return false;
