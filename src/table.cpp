@@ -2,7 +2,7 @@
 
 namespace jsc {
 
-string Romaji::Convert(string input) {
+string Table::Convert(string input) {
   string output;
   for (int i = 0; i < (int)input.size(); i++) {
     bool flag = false;
@@ -23,7 +23,7 @@ string Romaji::Convert(string input) {
   return output;
 }
 
-bool Romaji::Load(string filename) {
+bool Table::Load(string filename) {
   fstream fs(filename.c_str(), ios_base::in);
   if (!fs.is_open())
     return false;

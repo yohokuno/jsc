@@ -1,7 +1,7 @@
 #include "jsc.h"
 using namespace jsc;
 
-void Run(string prefix, string format, bool label, string romaji) {
+void Run(string prefix, string format, bool label, string table_mode) {
   Model &model = Model::GetModel();
 
   if (!model.LoadFromBinary(prefix.c_str())) {
@@ -10,19 +10,19 @@ void Run(string prefix, string format, bool label, string romaji) {
   }
 
   Decoder &decoder = Decoder::GetDecoder();
-  Romaji table = Romaji();
-  if (romaji == "both" || romaji == "on")
-    table.Load(prefix + "romaji.txt");
+  Table table = Table();
+  if (table_mode == "both" || table_mode == "on")
+    table.Load(prefix + "table.txt");
 
   string line;
   while (getline(cin, line)) {
     vector<Node> result;
-    if (romaji == "off") {
+    if (table_mode == "off") {
       decoder.Decode(line, result, label);
-    } else if (romaji == "on") {
+    } else if (table_mode == "on") {
       line = table.Convert(line);
       decoder.Decode(line, result, label);
-    } else if (romaji == "both") {
+    } else if (table_mode == "both") {
       vector<Node> result1, result2;
       decoder.Decode(line, result1, label);
       line = table.Convert(line);
@@ -55,7 +55,7 @@ void Run(string prefix, string format, bool label, string romaji) {
 int main(int argc, char **argv) {
   string prefix = "./";
   string format = "segment";
-  string romaji = "both";
+  string table_mode = "both";
   bool label = true;
   int c;
   while ((c = getopt (argc, argv, "d:f:r:l")) != -1) {
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
         format = optarg;
         break;
       case 'r':
-        romaji = optarg;
+        table_mode = optarg;
         break;
       case '?':
         cerr << "Unknown option -" << optopt << endl;
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  Run(prefix, format, label, romaji);
+  Run(prefix, format, label, table_mode);
 
   return 0;
 }

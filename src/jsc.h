@@ -18,7 +18,7 @@
 #include "lattice.h"
 #include "model.h"
 #include "decoder.h"
-#include "romaji.h"
+#include "table.h"
 
 #endif
 

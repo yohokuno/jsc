@@ -12,12 +12,24 @@ typedef unsigned char     uint8_t;
 typedef unsigned short    uint16_t;
 typedef unsigned int      uint32_t;
 
-#define INT_MAX   0x7FFFFFFF
-#define INT_MIN   0x80000000
-#define SHRT_MAX  0x7FFF
-#define SHRT_MIN  0x8000
-#define UINT_MAX  0xFFFFFFFFUL
-#define USHRT_MAX 0xFFFFU
+#ifndef INT_MAX
+  #define INT_MAX   0x7FFFFFFF
+#endif
+#ifndef INT_MIN
+  #define INT_MIN   0x80000000
+#endif
+#ifndef SHRT_MAX
+  #define SHRT_MAX  0x7FFF
+#endif
+#ifndef SHRT_MIN
+  #define SHRT_MIN  0x8000
+#endif
+#ifndef UINT_MAX
+  #define UINT_MAX  0xFFFFFFFFUL
+#endif
+#ifndef USHRT_MAX
+  #define USHRT_MAX 0xFFFFU
+#endif
 #define SCALE_COST      500.
 
 #define PAIR_SEPARATOR  '/'
