@@ -126,11 +126,5 @@ void Model::Clear() {
   entries_.clear();
   offsets_.clear();
 }
-// static
-static Model g_model;
-Model &Model::GetModel() {
-  return g_model;
-}
-
 }
 

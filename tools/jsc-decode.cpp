@@ -2,14 +2,14 @@
 using namespace jsc;
 
 void Run(string prefix, string format, bool label, string table_mode) {
-  Model &model = Model::GetModel();
+  Model model;
 
   if (!model.LoadFromBinary(prefix.c_str())) {
     cerr << "Model " << prefix << "is not found." << endl;
     return;
   }
 
-  Decoder &decoder = Decoder::GetDecoder();
+  Decoder decoder(model);
   Table table = Table();
   if (table_mode == "both" || table_mode == "on")
     table.Load(prefix + "table.txt");

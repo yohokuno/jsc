@@ -22,7 +22,7 @@ void TestBuildNgram() {
 void TestModel() {
   TEST_START();
 
-  Model &model = Model::GetModel();
+  Model model;
   if (!model.LoadFromBinary(TEST_DATA)) {
     cerr << "missing " << TEST_DATA << endl;
     return;
@@ -50,9 +50,9 @@ void TestModel() {
 void TestDecoder() {
   TEST_START();
 
-  Decoder &decoder = Decoder::GetDecoder();
-  Model &model = Model::GetModel();
+  Model model;
   model.LoadFromBinary(TEST_DATA);
+  Decoder decoder(model);
 
   {
     vector<Node> result;

@@ -22,6 +22,8 @@
 #include "jsc.h"
 using namespace jsc;
 
+Model model;
+
 void readcb(struct bufferevent *bev, void *ctx) {
   struct evbuffer *input, *output;
   char *line;
@@ -29,7 +31,7 @@ void readcb(struct bufferevent *bev, void *ctx) {
   input = bufferevent_get_input(bev);
   output = bufferevent_get_output(bev);
 
-  Decoder &decoder = Decoder::GetDecoder();
+  Decoder decoder(model);
 
   while ((line = evbuffer_readln(input, &n, EVBUFFER_EOL_LF))) {
     vector<Node> result;
@@ -127,7 +129,6 @@ void run(int port) {
 }
 
 int main(int argc, char **argv) {
-  Model &model = Model::GetModel();
   string prefix = "./";
   string format = "segment";
   string table_mode = "both";

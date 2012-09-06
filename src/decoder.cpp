@@ -2,8 +2,7 @@
 
 namespace jsc {
 
-Decoder::Decoder()
-    : model_(Model::GetModel()) {
+Decoder::Decoder(Model &model) : model_(model) {
 }
 
 Decoder::~Decoder() {
@@ -131,13 +130,5 @@ string ToStringDebug(vector<Node> &nodes) {
   }
   return oss.str();
 }
-
-
-// static
-static Decoder g_decoder;
-Decoder &Decoder::GetDecoder() {
-  return g_decoder;
-}
-
 }
 

@@ -35,9 +35,6 @@ public:
   void Clear();
   uint32_t GetSize() { return (uint32_t)entries_.size(); }
 
-  // Get reference from global object.
-  static Model &GetModel();
-
 private:
   void PushResult(uint32_t source_id, string &query, vector<Ngram> &result);
   marisa::Trie source_trie_;

@@ -14,7 +14,7 @@ namespace jsc {
 
 class Decoder {
  public:
-  Decoder();
+  Decoder(Model &model);
   virtual ~Decoder();
 
   bool Decode(string input, vector<Node> &nodes, bool label=true);
@@ -26,8 +26,6 @@ class Decoder {
   //  1) Forward: calculate cost of nodes in lattice from left to righ
   //  2) Backward: search the best path using the total cost
   bool Viterbi(Lattice &lattice, vector<Node> &result);
-
-  static Decoder &GetDecoder();
 
  private:
   Model &model_;
