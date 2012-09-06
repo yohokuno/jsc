@@ -11,10 +11,13 @@ It can be used for machine transliteration, Japanese kana-kanji conversion, Chin
 Requirement
 ---
 
-JSC requires Unix, gcc, python and marisa-trie.
+JSC requires Unix, gcc, python, and marisa-trie. If you want to use RPC server, you also need libevent.
 
-    marisa-trie version 0.2.0
+    marisa-trie 0.2.0 or later
     http://code.google.com/p/marisa-trie/
+
+    libevent 2.0 or later
+    http://libevent.org/
 
 Install
 ---
@@ -30,7 +33,8 @@ Usage
 
 ### jsc-decode
 
-**jsc-decode** command convert source string from standard input to target string via joint source channel model.
+**jsc-decode** command convert source string into target string via joint source channel model.
+You can provide queries through standard input line by line.
 
     options:
     -d directory: specify data directory or prefix (default: ./)
@@ -46,6 +50,18 @@ Usage
     -d directory: specify data directory or prefix (default: ./)
     -m model: specify model file name (default: ngram)
     -r: build reverse model
+
+### jsc-server
+
+**jsc-server** command provides RPC server via simple TCP protocol.
+You can provide queries through telnet command line by line.
+
+    options:
+    -d directory: specify data directory or prefix (default: ./)
+    -f format: specify format (segment [default], plain, debug)
+    -t table: specify table [romaji] mode (both [default], on, off)
+    -p port: specify port number (default: 40714)
+    -l: turn off sentence-beginning/ending label
 
 Japanese Kana Kanji Conversion
 ---
