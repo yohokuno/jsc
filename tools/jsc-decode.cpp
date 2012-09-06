@@ -61,9 +61,6 @@ int main(int argc, char **argv) {
   int c;
   while ((c = getopt (argc, argv, "d:f:t:l")) != -1) {
     switch (c) {
-      case 'l':
-        label = false;
-        break;
       case 'd':
         prefix = optarg;
         break;
@@ -72,6 +69,9 @@ int main(int argc, char **argv) {
         break;
       case 't':
         table_mode = optarg;
+        break;
+      case 'l':
+        label = false;
         break;
       case '?':
         cerr << "Unknown option -" << optopt << endl;
