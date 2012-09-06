@@ -27,6 +27,7 @@ void Run(string prefix, string format, bool label, string table_mode) {
       decoder.Decode(line, result1, label);
       line = table.Convert(line);
       decoder.Decode(line, result2, label);
+      if (result1.size() == 0 || result2.size() == 0) continue;
       if (result1.back().total_cost < result2.back().total_cost) {
         result = result1;
       } else {
