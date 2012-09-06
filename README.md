@@ -58,6 +58,15 @@ For Japanese Kana Kanji conversion, a model is provided at data/japanese directo
     arayurugenjitsuwosubetejibunnnohouhenejimagetanoda
     あらゆる 現実 を 全て 自分 の ほう へ ネジ 曲げ た の だ
 
+Japanese Pronunciation Inference
+---
+
+For Japanese pronunciation inference, a model is provided at data/japanese-reverse directory.
+
+    $ ./build/jsc-decode -d data/japanese-reverse/
+    魔理沙は大変なものを盗んでいきました
+    ま りさ は たいへん な もの を ぬす ん で い き ま し た
+
 Chinese Pinyin Input
 ---
 
@@ -68,6 +77,15 @@ For Chinese Pinyin input, a model is provided at data/chinese/ directory.
     我 爱 自然 语言 处理
     zhejianshitagegehaibuzhidaone
     这 件 事 她 哥哥 海部 知道 呢
+
+Chinese Hanzi-to-Pinyin Conversion
+---
+
+For Chinese Hanzi-to-Pinyin Conversion, a model is provided at data/chinese-reverse/ directory.
+
+    $ ./build/jsc-decode -d data/chinese-reverse/
+    汉字拼音转换
+    hanzi pinyin zhuanhuan 
 
 English word segmentation / automatic capitalization
 ---

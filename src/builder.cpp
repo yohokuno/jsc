@@ -20,7 +20,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     vector<string> result;
     split(line, '\t', result);
     ASSERT(result.size() <= 3);
-    
+
     // skip unnecessary line
     if (result.size() <= 1)
       continue;
@@ -29,29 +29,43 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
     Ngram ngram;
     ngram.ngram = result.at(1);
     vector<string> splited;
-    bool flag = false;
+    bool error = false;
+    string reverse_ngram;
 
     split(ngram.ngram, NGRAM_SEPARATOR, splited);
+
     for (uint32_t i = 0; i < splited.size(); i++) {
       if (splited[i] == LABEL_BEGIN) {
         ngram.source += SOURCE_BEGIN;
+        reverse_ngram += splited[i] + " ";
       } else if (splited[i] == LABEL_END) {
         ngram.source += SOURCE_END;
+        reverse_ngram += splited[i] + " ";
       } else if (splited[i] == LABEL_UNK) {
         ngram.source += SOURCE_UNK;
+        reverse_ngram += splited[i] + " ";
       } else {
         vector<string> pair;
         split(splited[i], PAIR_SEPARATOR, pair);
+
         if (pair.size() == 2) {
-          if (!reverse)
+          if (!reverse) {
             ngram.source += pair[1];
-          else
+          } else {
             ngram.source += pair[0];
-        } else
-          flag = true;
+            reverse_ngram += pair[1] + "/" + pair[0] + " ";
+          }
+        } else {
+          error = true;
+        }
       }
     }
-    if (flag) continue;
+
+    if (error) continue;
+
+    if (reverse) {
+      ngram.ngram = reverse_ngram.substr(0, reverse_ngram.size()-1);
+    }
 
     // parse cost
     if (result[0] == MAX_COST) {
