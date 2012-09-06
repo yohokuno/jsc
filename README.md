@@ -35,7 +35,7 @@ Usage
     options:
     -d directory: specify data directory or prefix (default: ./)
     -f format: specify format (segment [default], plain, debug)
-    -r romaji: specify romaji mode (both [default], on, off)
+    -t table: specify table [romaji] mode (both [default], on, off)
     -l: turn off sentence-beginning/ending label
 
 ### jsc-build
@@ -52,7 +52,7 @@ Japanese Kana Kanji Conversion
 
 For Japanese Kana Kanji conversion, a model is provided at data/japanese directory. By default, both romaji and hiragana input are allowed.
 
-    $ jsc-decode -d data/japanese/
+    $ ./build/jsc-decode -d data/japanese/
     わたしのなまえはなかのです。
     わたし の 名前 は 中野 です 。
     arayurugenjitsuwosubetejibunnnohouhenejimagetanoda
@@ -63,7 +63,7 @@ Chinese Pinyin Input
 
 For Chinese Pinyin input, a model is provided at data/chinese/ directory.
 
-    $ jsc-decode -d data/chinese/
+    $ ./build/jsc-decode -d data/chinese/
     woaiziranyuyanchuli
     我 爱 自然 语言 处理
     zhejianshitagegehaibuzhidaone
@@ -74,7 +74,7 @@ English word segmentation / automatic capitalization
 
 For English input, a model is provided at data/english/ directory.
 
-    $ jsc-decode -d data/english/
+    $ ./build/jsc-decode -d data/english/
     alicewasbeginningtogetverytiredofsittingbyhersisteronthebank
     Alice was beginning to get very tired of sitting by her sister on the bank
     istandheretodayhumbledbythetaskbeforeusgratefulforthetrustyouhavebestowedmindfulofthesacrificesbornebyourancestors
@@ -85,24 +85,15 @@ Mixed Input
 
 For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory. The language is detected automatically.
 
-    $ jsc-decode -d data/mixed/
-    thisisapen
-    This is a pen
+    $ ./build/jsc-decode -d data/mixed/
+    thisisapencil
+    This is a pencil
     kyouhayoitenkidesune
     今日 は 良い 天気 です ね
     woshizhongguoren
     我 是 中国 人
-    thisishaochi!
-    This is 好吃 !
-
-File format
----
-
-N-gram file should be SRILM format.
-
-    http://www.speech.sri.com/projects/srilm/
-
-Target string and source string should be coupled with character '/'; e.g. "私/わたし"
+    thisistotemohaochi!
+    This is とても 好吃 ！
 
 Directories
 ---
@@ -116,4 +107,13 @@ Top directory contains these files and directories:
     tools/      command tools by C++
     waf         waf build script
     wscript     waf settings
+
+File format
+---
+
+N-gram file should be SRILM format.
+
+    http://www.speech.sri.com/projects/srilm/
+
+Target string and source string should be coupled with character '/'; e.g. "私/わたし"
 

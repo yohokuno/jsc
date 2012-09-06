@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
   string table_mode = "both";
   bool label = true;
   int c;
-  while ((c = getopt (argc, argv, "d:f:r:l")) != -1) {
+  while ((c = getopt (argc, argv, "d:f:t:l")) != -1) {
     switch (c) {
       case 'l':
         label = false;
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
       case 'f':
         format = optarg;
         break;
-      case 'r':
+      case 't':
         table_mode = optarg;
         break;
       case '?':
