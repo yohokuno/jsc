@@ -23,6 +23,9 @@
 using namespace jsc;
 
 Model model;
+string format = "segment";
+string table_mode = "both";
+bool label = true;
 
 void readcb(struct bufferevent *bev, void *ctx) {
   struct evbuffer *input, *output;
@@ -35,10 +38,19 @@ void readcb(struct bufferevent *bev, void *ctx) {
 
   while ((line = evbuffer_readln(input, &n, EVBUFFER_EOL_LF))) {
     vector<Node> result;
-    decoder.Decode((string)line, result, false);
-    string format = ToStringPlain(result);
+    decoder.Decode((string)line, result, label);
+    stringstream ss;
 
-    evbuffer_add(output, format.c_str(), format.size());
+    if (format == "debug") {
+      ss << ToStringDebug(result) << endl;
+      ss << ToStringPlain(result) << endl;
+    } else if (format == "plain") {
+      ss << ToStringPlain(result) << endl;
+    } else if (format == "segment") {
+      ss << ToStringSegment(result) << endl;
+    }
+
+    evbuffer_add(output, ss.str().c_str(), ss.str().size());
     evbuffer_add(output, "\n", 1);
     free(line);
   }
@@ -130,10 +142,7 @@ void run(int port) {
 
 int main(int argc, char **argv) {
   string prefix = "./";
-  string format = "segment";
-  string table_mode = "both";
   int port = 40714;
-  bool label = true;
   int c;
   while ((c = getopt (argc, argv, "d:f:t:p:l")) != -1) {
     switch (c) {
