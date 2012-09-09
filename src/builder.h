@@ -18,7 +18,7 @@ public:
   //   5) Sort source array by source_id
   //   6) Extract offset of source_id
   //   7) Save offset and entry array as binary
-  bool Build(const char *filename, const char *prefix, bool reverse=false);
+  bool Build(const char *filename, const char *prefix, bool reverse=false, int trie_num=3);
 };
 
 }

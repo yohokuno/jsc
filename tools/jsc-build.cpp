@@ -6,8 +6,9 @@ int main(int argc, char **argv) {
   string model = "ngram";
 
   bool reverse = false;
+  int trie_num = 3;
   int c;
-  while ((c = getopt (argc, argv, "d:m:r")) != -1) {
+  while ((c = getopt (argc, argv, "d:m:t:r")) != -1) {
     switch (c) {
       case 'd':
         prefix = optarg;
@@ -17,6 +18,9 @@ int main(int argc, char **argv) {
         break;
       case 'r':
         reverse = true;
+        break;
+      case 't':
+        trie_num = atoi(optarg);
         break;
       case '?':
         cerr << "Unknown option -" << optopt << endl;
@@ -28,7 +32,7 @@ int main(int argc, char **argv) {
   {
     Builder builder;
     cerr << "Building model..." << endl;
-    bool result = builder.Build(model.c_str(), prefix.c_str(), reverse);
+    bool result = builder.Build(model.c_str(), prefix.c_str(), reverse, trie_num);
     if (result) {
       cerr << "Succeeded to build model." << endl;
     } else {

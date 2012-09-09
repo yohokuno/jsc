@@ -49,6 +49,7 @@ You can provide queries through standard input line by line.
     options:
     -d directory: specify data directory or prefix (default: ./)
     -m model: specify model file name (default: ngram)
+    -t trie_num: specify trie number in marisa-trie (default: 3)
     -r: build reverse model
 
 ### jsc-server

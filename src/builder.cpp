@@ -2,7 +2,7 @@
 
 namespace jsc {
 
-bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
+bool Builder::Build(const char *filename, const char *prefix, bool reverse, int trie_num) {
 
   // open text file
   fstream fs(filename);
@@ -96,7 +96,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   }
   // build and save source trie
   marisa::Trie source_trie;
-  source_trie.build(source_keyset);
+  source_trie.build(source_keyset, trie_num);
   {
     string file(prefix);
     file.append(SOURCE_TRIE);
@@ -106,7 +106,7 @@ bool Builder::Build(const char *filename, const char *prefix, bool reverse) {
   // build and save ngram trie
   // Notice: ngram trie is used later for building entry array.
   marisa::Trie ngram_trie;
-  ngram_trie.build(ngram_keyset);
+  ngram_trie.build(ngram_keyset, trie_num);
   {
     string file(prefix);
     file.append(NGRAM_TRIE);
