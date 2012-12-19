@@ -156,7 +156,7 @@ Reference
 ### Accuracy
 
 <table>
-<tr><td>Language</td><td>F-score</td><td>Size</td></tr>
+<tr><th>Language</th><th>F-score</th><th>Size</th></tr>
 <tr><td>Japanese</td><td>0.937</td><td>10MB</td></tr>
 <tr><td>Chinese</td><td>0.895</td><td>9MB</td></tr>
 <tr><td>English</td><td>not ready</td><td>9MB</td></tr>
