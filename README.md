@@ -64,8 +64,10 @@ You can provide queries through telnet command line by line.
     -p port: specify port number (default: 40714)
     -l: turn off sentence-beginning/ending label
 
-Japanese Kana Kanji Conversion
+Sample Applications
 ---
+
+### Japanese Kana Kanji Conversion
 
 For Japanese Kana Kanji conversion, a model is provided at data/japanese directory. By default, both romaji and hiragana input are allowed.
 
@@ -75,8 +77,7 @@ For Japanese Kana Kanji conversion, a model is provided at data/japanese directo
     arayurugenjitsuwosubetejibunnnohouhenejimagetanoda
     あらゆる 現実 を 全て 自分 の ほう へ ネジ 曲げ た の だ
 
-Japanese Pronunciation Inference
----
+### Japanese Pronunciation Inference
 
 For Japanese pronunciation inference, a model is provided at data/japanese-reverse directory.
 
@@ -84,8 +85,7 @@ For Japanese pronunciation inference, a model is provided at data/japanese-rever
     魔理沙は大変なものを盗んでいきました
     ま りさ は たいへん な もの を ぬす ん で い き ま し た
 
-Chinese Pinyin Input
----
+### Chinese Pinyin Input
 
 For Chinese Pinyin input, a model is provided at data/chinese/ directory.
 
@@ -95,8 +95,7 @@ For Chinese Pinyin input, a model is provided at data/chinese/ directory.
     zhejianshitagegehaibuzhidaone
     这 件 事 她 哥哥 海部 知道 呢
 
-Chinese Hanzi-to-Pinyin Conversion
----
+### Chinese Hanzi-to-Pinyin Conversion
 
 For Chinese Hanzi-to-Pinyin Conversion, a model is provided at data/chinese-reverse/ directory.
 
@@ -104,8 +103,7 @@ For Chinese Hanzi-to-Pinyin Conversion, a model is provided at data/chinese-reve
     汉字拼音转换
     hanzi pinyin zhuanhuan 
 
-English word segmentation / automatic capitalization
----
+### English word segmentation / automatic capitalization
 
 For English input, a model is provided at data/english/ directory.
 
@@ -115,8 +113,7 @@ For English input, a model is provided at data/english/ directory.
     istandheretodayhumbledbythetaskbeforeusgratefulforthetrustyouhavebestowedmindfulofthesacrificesbornebyourancestors
     I Stand here today humbled by the task before us grateful for the trust you have bestowed mindful of the sacrifices borne by our ancestors 
 
-Mixed Input
----
+### Mixed Input
 
 For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ directory. The language is detected automatically.
 
@@ -130,8 +127,10 @@ For English/Japanese/Chinese mixed input, a model is provided at data/mixed/ dir
     thisistotemohaochi!
     This is とても 好吃 ！
 
-Directories
+Data Structure
 ---
+
+### Directories
 
 Top directory contains these files and directories:
 
@@ -143,12 +142,31 @@ Top directory contains these files and directories:
     waf         waf build script
     wscript     waf settings
 
-File format
----
+### File format
 
 N-gram file should be SRILM format.
 
     http://www.speech.sri.com/projects/srilm/
 
 Target string and source string should be coupled with character '/'; e.g. "私/わたし"
+
+Reference
+---
+
+### Accuracy
+
+<table>
+<tr><td>Language</td><td>F-score</td><td>Size</td></tr>
+<tr><td>Japanese</td><td>0.937</td><td>10MB</td></tr>
+<tr><td>Chinese</td><td>0.895</td><td>9MB</td></tr>
+<tr><td>English</td><td>not ready</td><td>9MB</td></tr>
+<tr><td>Mixed</td><td>not ready</td><td>27MB</td></tr>
+</table>
+
+### Paper
+
+Please refer this paper if you need.
+
+    Yoh Okuno and Shinsuke Mori, An Ensemble Model of Word-based and Character-based Models for Japanese and Chinese Input Method, Workshop on Advances in Text Input Methods, 2012.
+    http://yoh.okuno.name/pdf/wtim2012.pdf
 
